@@ -1,3 +1,4 @@
+// Import React and necessary dependencies
 import React, { useState, useRef, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme, themesOptions } from "./style/theme";
@@ -22,7 +23,19 @@ import {
 } from "./components/features/sound/sound";
 import DynamicBackground from "./components/common/DynamicBackground";
 
+// Define the App component
 function App() {
+  // Define setGameMode and its initial state
+  const [gameMode, setGameMode] = useLocalPersistState(
+    GAME_MODE_DEFAULT,
+    GAME_MODE
+  );
+
+  // Define handleGameModeChange function
+  const handleGameModeChange = (currGameMode) => {
+    setGameMode(currGameMode);
+  };
+
   // localStorage persist theme setting
   const [theme, setTheme] = useState(() => {
     const stickyTheme = window.localStorage.getItem("theme");
@@ -31,7 +44,6 @@ function App() {
       const upstreamTheme = themesOptions.find(
         (e) => e.label === localTheme.label
       ).value;
-      // we will do a deep equal here. In case we want to support customized local theme.
       const isDeepEqual = localTheme === upstreamTheme;
       return isDeepEqual ? localTheme : upstreamTheme;
     }
@@ -43,12 +55,6 @@ function App() {
 
   const [soundType, setSoundType] = useLocalPersistState(
     DEFAULT_SOUND_TYPE_KEY
-  );
-
-  // local persist game mode setting
-  const [gameMode, setGameMode] = useLocalPersistState(
-    GAME_MODE_DEFAULT,
-    GAME_MODE
   );
 
   // localStorage persist focusedMode setting
@@ -240,13 +246,22 @@ function App() {
               themesOptions={themesOptions}
               theme={theme}
               soundMode={soundMode}
-              toggleSoundMode={() => setSoundMode(!soundMode)}
+              toggleSoundMode={toggleSoundMode}
               soundOptions={soundOptions}
               soundType={soundType}
               handleSoundTypeChange={handleSoundTypeChange}
               handleThemeChange={handleThemeChange}
+              toggleFocusedMode={toggleFocusedMode}
+              toggleCoffeeMode={toggleCoffeeMode}
+              isFocusedMode={isFocusedMode}
+              isCoffeeMode={isCoffeeMode}
+              gameMode={gameMode}
+              handleGameModeChange={handleGameModeChange}
+              isTrainerMode={isTrainerMode}
+              toggleTrainerMode={toggleTrainerMode}
               toggleLoginPage={toggleLoginPage}
-            ></FooterMenu>
+              isLoginPage={isLoginPage}
+            />
           </div>
         </div>
       </>
@@ -254,4 +269,5 @@ function App() {
   );
 }
 
+// Export the App component
 export default App;
