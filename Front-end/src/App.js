@@ -2,11 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme, themesOptions } from "./style/theme";
 import { GlobalStyles } from "./style/global";
+import Logo from "./components/common/Logo";
+import FooterMenu from "./components/common/FooterMenu";
 import TypeBox from "./components/features/TypeBox/TypeBox";
 import SentenceBox from "./components/features/SentenceBox/SentenceBox";
-import Logo from "./components/common/Logo";
-
-import FooterMenu from "./components/common/FooterMenu";
 import FreeTypingBox from "./components/features/FreeTypingBox";
 import Login from "./components/common/Login";
 import {
@@ -51,10 +50,6 @@ function App() {
     GAME_MODE_DEFAULT,
     GAME_MODE
   );
-
-  const handleGameModeChange = (currGameMode) => {
-    setGameMode(currGameMode);
-  };
 
   // localStorage persist focusedMode setting
   const [isFocusedMode, setIsFocusedMode] = useState(
@@ -131,7 +126,6 @@ function App() {
   const toggleLoginPage = () => {
     setIsTrainerMode(false);
     setIsCoffeeMode(false);
-    setIsWordsCardMode(false);
     setIsMusicMode(!isMusicMode);
     setSoundMode(!soundMode);
     setIsLoginPage(!isLoginPage);
@@ -188,8 +182,13 @@ function App() {
         <DynamicBackground theme={theme}></DynamicBackground>
         <div className="canvas">
           <GlobalStyles />
-          <Logo isFocusedMode={isFocusedMode} isMusicMode={isMusicMode}></Logo>
-          {isWordGameMode && (
+          {!isLoginPage && (
+            <Logo
+              isFocusedMode={isFocusedMode}
+              isMusicMode={isMusicMode}
+            ></Logo>
+          )}
+          {!isLoginPage && isWordGameMode && (
             <TypeBox
               textInputRef={textInputRef}
               isFocusedMode={isFocusedMode}
@@ -199,7 +198,7 @@ function App() {
               handleInputFocus={() => focusTextInput()}
             ></TypeBox>
           )}
-          {isSentenceGameMode && (
+          {!isLoginPage && isSentenceGameMode && (
             <SentenceBox
               sentenceInputRef={sentenceInputRef}
               isFocusedMode={isFocusedMode}
@@ -209,48 +208,43 @@ function App() {
               handleInputFocus={() => focusSentenceInput()}
             ></SentenceBox>
           )}
-          {isCoffeeMode && !isTrainerMode && !isWordsCardMode && (
-            <FreeTypingBox
-              textAreaRef={textAreaRef}
-              soundMode={soundMode}
-              soundType={soundType}
-            />
-          )}
+          {!isLoginPage &&
+            isCoffeeMode &&
+            !isTrainerMode &&
+            !isWordsCardMode && (
+              <FreeTypingBox
+                textAreaRef={textAreaRef}
+                soundMode={soundMode}
+                soundType={soundType}
+              />
+            )}
           {isLoginPage && !isTrainerMode && !isWordsCardMode && (
             <Login
+              theme={theme}
               toggleLoginPage={toggleLoginPage}
               toggleSignUpPage={toggleLoginPage} // Toggle between login and sign up page within the Login component
             />
           )}
-          {isTrainerMode && !isCoffeeMode && !isWordsCardMode && (
-            <DefaultKeyboard
-              soundMode={soundMode}
-              soundType={soundType}
-            ></DefaultKeyboard>
-          )}
+          {!isLoginPage &&
+            isTrainerMode &&
+            !isCoffeeMode &&
+            !isWordsCardMode && (
+              <DefaultKeyboard
+                soundMode={soundMode}
+                soundType={soundType}
+              ></DefaultKeyboard>
+            )}
 
           <div className="bottomBar">
             <FooterMenu
               themesOptions={themesOptions}
               theme={theme}
               soundMode={soundMode}
-              toggleSoundMode={toggleSoundMode}
+              toggleSoundMode={() => setSoundMode(!soundMode)}
               soundOptions={soundOptions}
               soundType={soundType}
               handleSoundTypeChange={handleSoundTypeChange}
               handleThemeChange={handleThemeChange}
-              toggleFocusedMode={toggleFocusedMode}
-              toggleMusicMode={toggleMusicMode}
-              toggleCoffeeMode={toggleCoffeeMode}
-              isCoffeeMode={isCoffeeMode}
-              isMusicMode={isMusicMode}
-              isFocusedMode={isFocusedMode}
-              gameMode={gameMode}
-              handleGameModeChange={handleGameModeChange}
-              isTrainerMode={isTrainerMode}
-              toggleTrainerMode={toggleTrainerMode}
-              isWordsCardMode={isWordsCardMode}
-              toggleWordsCardMode={toggleWordsCardMode}
               toggleLoginPage={toggleLoginPage}
             ></FooterMenu>
           </div>

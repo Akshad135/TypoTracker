@@ -10,9 +10,7 @@ const Logo = ({ isFocusedMode }) => {
       <h1>
         TypoTracker <KeyboardAltIcon fontSize="large" />
       </h1>
-      <span className="sub-header">
-        an elegant typing experience, just start typing
-      </span>
+      <span className="sub-header">an elegant typing experience</span>
     </div>
   );
 };
