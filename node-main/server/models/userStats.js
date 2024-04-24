@@ -59,7 +59,7 @@ const userStatsSchema = mongoose.Schema({
   },
   mode: {
     type: String,
-    enum: ["30s", "60s", "90s", "custom"],
+    enum: ["30s", "60s", "90s", "custom", "15s"],
     required: true,
   },
   score: {
