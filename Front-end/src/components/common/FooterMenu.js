@@ -163,7 +163,7 @@ const FooterMenu = ({
         </Box>
       </Grid>
       {/* If isLoginPage is true, render the Login component */}
-      {isLoginPage && <Login selectedTheme={theme} />}
+      {/* {isLoginPage && <Login selectedTheme={theme} />} */}
     </AppBar>
   );
 };
