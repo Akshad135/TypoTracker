@@ -34,23 +34,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Add a route handler for the /stats endpoint
-// router.post("/stats", async (req, res) => {
-//   try {
-//     const { userId, mode, score } = req.body;
-//     const userStats = new UserStats({
-//       user: userId,
-//       mode,
-//       score,
-//     });
-//     await userStats.save();
-//     res.status(201).json({ message: "User stats added successfully" });
-//   } catch (error) {
-//     console.log("Error: " + error.message);
-//     // res.status(500).json({ error.message });
-//   }
-// }
-// );
 router.post("/stats", async (req, res) => {
   try {
     const { userId, mode, score } = req.body;
