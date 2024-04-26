@@ -125,7 +125,6 @@ const TypeBox = ({
     setOpenRestart(true);
   };
 
-  // set up words state
   const [wordsDict, setWordsDict] = useState(() => {
     if (language === ENGLISH_MODE) {
       return wordsGenerator(
