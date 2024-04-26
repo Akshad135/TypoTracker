@@ -1,4 +1,3 @@
-// Import React and necessary dependencies
 import React, { useState, useRef, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme, themesOptions } from "./style/theme";
